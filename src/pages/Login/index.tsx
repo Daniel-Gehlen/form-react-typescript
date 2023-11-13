@@ -1,21 +1,19 @@
+import React from "react";
 import { useForm } from "react-hook-form";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
 import { Container, LoginContainer, Column, Spacing, Title } from "./styles";
 import { defaultValues, IFormLogin } from "./types";
 
-const schema = yup
-  .object({
-    email: yup.string().email("E-mail inválido").required("Campo obrigatório"),
-    password: yup
-      .string()
-      .min(6, "No minimo 6 caracteres")
-      .required("Campo obrigatório"),
-  })
-  .required();
+const schema = yup.object({
+  email: yup.string().email("E-mail inválido").required("Campo obrigatório"),
+  password: yup
+    .string()
+    .min(6, "No mínimo 6 caracteres")
+    .required("Campo obrigatório"),
+});
 
 const Login = () => {
   const {
@@ -27,6 +25,14 @@ const Login = () => {
     defaultValues,
     reValidateMode: "onChange",
   });
+
+  const handleLogin = () => {
+    // Esta é a função de clique do botão "Entrar"
+    if (isValid) {
+      // Faça algo quando o formulário for válido, por exemplo, envie uma solicitação de login.
+      console.log("Login bem-sucedido!");
+    }
+  };
 
   return (
     <Container>
@@ -49,7 +55,7 @@ const Login = () => {
             errorMessage={errors?.password?.message}
           />
           <Spacing />
-          <Button title="Entrar" />
+          <Button title="Entrar" onClick={handleLogin} disabled={!isValid} />
         </Column>
       </LoginContainer>
     </Container>
